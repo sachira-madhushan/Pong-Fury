@@ -9,6 +9,7 @@ using System.Threading;
 using System;
 public class Player : MonoBehaviour
 {
+    //this is the player script
     private PhotonView photonView;
     private string command = "";
     Thread receiveThread;

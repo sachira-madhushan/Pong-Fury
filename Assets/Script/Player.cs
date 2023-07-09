@@ -14,11 +14,14 @@ public class Player : MonoBehaviour
     Thread receiveThread;
     UdpClient client;
     int port;
+    float com;
+    /*public GameObject player;*/
     String move;
+
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
-        port = 5065;
+        port = 22222;
         InitUDP();
     }
     private void InitUDP()
@@ -37,26 +40,12 @@ public class Player : MonoBehaviour
         {
             try
             {
-                IPEndPoint anyIP = new IPEndPoint(IPAddress.Parse("0.0.0.0"), port);
+                IPEndPoint anyIP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
                 byte[] data = client.Receive(ref anyIP);
 
                 command = Encoding.UTF8.GetString(data);
-                if (command[0] == '5' || command[0] == '4' || command[0] == '2' || command[0] == '1')
-                {
-                    move = "Right";
-
-                    print("command :" + command[0]);
-                }
-                else if (command[0] == '3')
-                {
-                    move = "Left";
-
-                    print("command :" + command[0]);
-                }
-                else if (command[0] == '0')
-                {
-                    move = "";
-                }
+                command = Encoding.UTF8.GetString(data);
+                com = float.Parse(command) % 3.2f; 
             }
             catch (Exception e)
             {
@@ -68,14 +57,7 @@ public class Player : MonoBehaviour
     {
         if (photonView.IsMine)
         {
-            if (move == "Right")
-            {
-                this.transform.position = new Vector3(this.transform.position.x,(this.transform.position.y + 0.1f) * Time.timeScale, 0);
-            }
-            else if (move == "Left")
-            {
-                this.transform.position = new Vector3(this.transform.position.x, (this.transform.position.y - 0.1f) * Time.timeScale, 0);
-            }
+            this.transform.position = new Vector3( this.gameObject.transform.position.x,com * Time.timeScale, 0);
         }
             
     }

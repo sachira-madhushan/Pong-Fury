@@ -7,18 +7,18 @@ using System.Text;
 using System.Threading;
 using System;
 
-public class command_receiver : MonoBehaviour
+public class Color_Command_Receiver : MonoBehaviour
 {
     private string command = "";
     Thread receiveThread;
     UdpClient client;
     int port;
-
+    float com;
     public GameObject player;
     String move;
     void Start()
     {
-        port = 8080;
+        port = 22222;
         InitUDP();
     }
     private void InitUDP()
@@ -37,26 +37,12 @@ public class command_receiver : MonoBehaviour
         {
             try
             {
-                IPEndPoint anyIP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+                IPEndPoint anyIP = new IPEndPoint(IPAddress.Parse("0.0.0.0"), port);
                 byte[] data = client.Receive(ref anyIP);
 
                 command = Encoding.UTF8.GetString(data);
-                if (command[0] == '5' || command[0] == '4' || command[0] == '2' || command[0] == '1')
-                {
-                    move = "Right";
-                    
-                    print("command :"+ command[0]);
-                }
-                else if(command[0] == '3')
-                {
-                    move = "Left";
-           
-                    print("command :" + command[0]);
-                }
-                else if(command[0]=='0')
-                {
-                    move = "";
-                }
+                com = float.Parse(command)%4;
+                
             }
             catch (Exception e)
             {
@@ -66,14 +52,7 @@ public class command_receiver : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (move == "Right")
-        {
-            player.transform.position = new Vector3((player.transform.position.x + 0.1f)*Time.timeScale, 0, 0);
-        }
-        else if(move == "Left")
-        {
-            player.transform.position = new Vector3((player.transform.position.x - 0.1f) * Time.timeScale, 0, 0);
-        }
+        player.transform.position = new Vector3(-1*com * Time.timeScale, 0, 0);
     }
         
     

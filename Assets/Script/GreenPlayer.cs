@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System;
-public class Player : MonoBehaviour
+public class GreenPlayer : MonoBehaviour
 {
     //this is the player script
     private PhotonView photonView;
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
-        port = 55555;
+        port = 12345;
         InitUDP();
     }
     private void InitUDP()
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     }
     private void ReceiveData()
     {
-        
+
         while (true)
         {
             try
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
 
                 command = Encoding.UTF8.GetString(data);
                 command = Encoding.UTF8.GetString(data);
-                com = float.Parse(command) % 3.2f; 
+                com = float.Parse(command) % 3.2f;
             }
             catch (Exception e)
             {
@@ -58,9 +58,15 @@ public class Player : MonoBehaviour
     {
         if (photonView.IsMine)
         {
-            this.transform.position = new Vector3( this.gameObject.transform.position.x,com * Time.timeScale, 0);
+            this.transform.position = new Vector3(this.gameObject.transform.position.x, com * Time.timeScale, 0);
         }
-            
+
     }
-    
+
+    private void OnApplicationQuit()
+    {
+        client.Close();
+        receiveThread.Abort();
+    }
+
 }

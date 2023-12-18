@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wall
+  - RedExit
+  - GreenExit
   layers:
   - Default
   - TransparentFX

@@ -15,11 +15,13 @@ public class CreateAndJoin : MonoBehaviourPunCallbacks
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(RoomCode.text);
+        PlayerPrefs.SetString("PlayerName", PlayerName.text);
     }
 
     public void JoinRoom()
     {
         PhotonNetwork.JoinRoom(RoomCode.text);
+        PlayerPrefs.SetString("PlayerName", PlayerName.text);
     }
 
     public override void OnJoinedRoom()

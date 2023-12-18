@@ -36,7 +36,7 @@ public class Game : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                SceneManager.LoadScene("Loading");
+                SceneManager.LoadScene("Start");
             }
         }
         if (gameStarted)
@@ -110,7 +110,7 @@ public class Game : MonoBehaviour
     public void displayResult()
     {
         Time.timeScale = 0;
-        if (redScore >= greenScore)
+        if (redScore <= greenScore)
         {
             victory.SetActive(true);
         }

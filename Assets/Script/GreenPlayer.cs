@@ -46,7 +46,7 @@ public class GreenPlayer : MonoBehaviour
 
                 command = Encoding.UTF8.GetString(data);
                 command = Encoding.UTF8.GetString(data);
-                com = float.Parse(command) % 3.2f;
+                com = float.Parse(command) % 5f;
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ public class GreenPlayer : MonoBehaviour
     {
         if (photonView.IsMine)
         {
-            this.transform.position = new Vector3(this.gameObject.transform.position.x, com * Time.timeScale, 0);
+            this.transform.position = new Vector3(this.gameObject.transform.position.x, com-1 * Time.timeScale, 0);
         }
 
     }
